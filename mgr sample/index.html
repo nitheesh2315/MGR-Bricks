@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGR Bricks | Small Bricks, Big Dreams</title>
+<meta name="theme-color" content="#171812">
+
+<style>
+:root {
+  --soil: #30251b;
+  --green: #334a35;
+  --sand: #e8d9b8;
+  --gold: #d8ae6a;
+  --dark: #151611;
+  --white: #f5f1e8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; }
+body {
+  background: var(--dark);
+  color: var(--white);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+nav {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 78px;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 20;
+  background: linear-gradient(#11130fe0, transparent);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  letter-spacing: 3px;
+  font-weight: 800;
+}
+.brick-logo {
+  width: 35px;
+  height: 25px;
+  position: relative;
+  border: 2px solid var(--gold);
+  transform: skewY(-5deg);
+}
+.brick-logo::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--gold);
+}
+.brick-logo::after {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--gold);
+}
+.nav-right { display: flex; align-items: center; gap: 25px; }
+.nav-right a, .lang-button {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.lang-button {
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid #bca77c66;
+  padding: 10px 13px;
+}
+.progress {
+  position: fixed;
+  right: 26px;
+  top: 34%;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.progress-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  color: #ffffff77;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  transition: color .3s;
+}
+.progress-dot {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+}
+.progress-item.active { color: var(--gold); }
+.progress-item.active .progress-dot {
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold);
+}
+.scroll-stage {
+  height: 500vh;
+  position: relative;
+}
+.sticky-hero {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 520px;
+  overflow: hidden;
+  background: #29261e;
+}
+#storyVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #29261e;
+  will-change: transform;
+  transform: translateZ(0);
+}
+.video-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, #11130fe0 0%, transparent 55%, #11130f60 100%),
+    linear-gradient(90deg, #11130f7a, transparent 90%);
+  pointer-events: none;
+}
+.hero-copy {
+  position: absolute;
+  left: 10%;
+  bottom: 15%;
+  max-width: 760px;
+  z-index: 2;
+  pointer-events: none;
+}
+.eyebrow {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 10px;
+  margin-bottom: 22px;
+}
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(46px, 8vw, 112px);
+  line-height: .98;
+  font-weight: 400;
+  letter-spacing: -3px;
+}
+h1 span { color: var(--gold); font-style: italic; }
+.hero-subtitle {
+  margin-top: 24px;
+  max-width: 390px;
+  line-height: 1.8;
+  color: #eee6d4cc;
+  font-size: 13px;
+}
+.scroll-hint {
+  margin-top: 34px;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sand);
+}
+.scroll-line {
+  height: 1px;
+  width: 50px;
+  background: var(--gold);
+}
+.video-counter {
+  position: absolute;
+  bottom: 32px;
+  right: 6%;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #ffffffaa;
+  z-index: 2;
+}
+.section {
+  padding: 130px 9%;
+  position: relative;
+}
+.section-kicker {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.section h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 76px);
+  line-height: 1.08;
+  max-width: 800px;
+}
+.section h2 em { color: var(--gold); font-weight: 400; }
+.section p {
+  color: #d4cfbf;
+  line-height: 1.9;
+  font-size: 14px;
+  max-width: 620px;
+  margin-top: 24px;
+}
+.story-intro {
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: radial-gradient(ellipse at 85% 30%, #42513b55, transparent 45%), var(--dark);
+}
+.elements {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  margin-top: 65px;
+  border: 1px solid #ffffff18;
+}
+.element {
+  padding: 25px 17px;
+  border-right: 1px solid #ffffff18;
+  min-height: 135px;
+}
+.element:last-child { border: 0; }
+.element-number {
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.element h3 {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin: 20px 0 9px;
+}
+.element p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.products {
+  background: #e9dfc9;
+  color: #28271f;
+}
+.products .section-kicker { color: #80613c; }
+.products p { color: #5b5549; }
+.product-grid {
+  margin-top: 55px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+.product-card {
+  min-height: 250px;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid #a58e6c66;
+  background: linear-gradient(145deg, #f5eddd, #d2bea0);
+  transition: transform .3s, box-shadow .3s;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px #3a2c1c20;
+}
+.product-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #84563c;
+  font-family: Georgia, serif;
+  font-size: 78px;
+  opacity: .24;
+  user-select: none;
+}
+.product-art.brick-art {
+  background: repeating-linear-gradient(0deg, transparent 0 30px, #a35f3d55 31px 34px),
+              repeating-linear-gradient(90deg, #bd7855 0 65px, #6c402f 66px 70px);
+  inset: 40px 35px 70px;
+  border: 4px solid #8c5239;
+  opacity: .48;
+  box-shadow: 8px 8px 0 #6e4737;
+}
+.product-card h3, .product-card button { position: relative; z-index: 1; }
+.product-card h3 {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+.product-card button {
+  background: transparent;
+  border: 1px solid #756147;
+  color: #30271c;
+  padding: 12px;
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.product-card button:hover { background: #30271c; color: #fff; }
+
+.order-section {
+  background:
+    radial-gradient(ellipse at 85% 20%, #47563d66, transparent 40%),
+    #171812;
+}
+.order-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  margin-top: 55px;
+  align-items: start;
+}
+.order-note {
+  border-left: 1px solid var(--gold);
+  padding: 10px 0 10px 25px;
+}
+.order-note strong {
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 12px;
+}
+.order-note p { margin-top: 0; }
+.order-form {
+  background: #ffffff08;
+  border: 1px solid #ffffff20;
+  padding: 30px;
+}
+.order-form label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--sand);
+  margin-bottom: 8px;
+}
+.field { margin-bottom: 20px; }
+.order-form input, .order-form select, .order-form textarea {
+  width: 100%;
+  background: #ffffff08;
+  border: 1px solid #ffffff30;
+  color: white;
+  padding: 14px;
+  outline: none;
+  border-radius: 0;
+}
+.order-form select option { background: #24251f; }
+.order-form input:focus, .order-form textarea:focus,
+.order-form select:focus { border-color: var(--gold); }
+.order-form textarea { resize: vertical; min-height: 90px; }
+.send-button {
+  width: 100%;
+  background: var(--gold);
+  color: #1c1a14;
+  border: 0;
+  padding: 16px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.send-button:hover { background: #efd09a; }
+.contact-section {
+  padding: 90px 9%;
+  background: #22271e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.contact-section h2 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 48px);
+}
+.contact-section p { color: #c9c7b9; font-size: 13px; margin-top: 15px; }
+.map-button {
+  display: inline-block;
+  background: var(--sand);
+  color: #25241c;
+  padding: 16px 22px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+footer {
+  padding: 30px 9%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  color: #aaa995;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+#toast {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 25px;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  background: var(--sand);
+  color: #222;
+  padding: 15px 22px;
+  font-size: 12px;
+  transition: .3s;
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+.wa-ico { width: 1em; height: 1em; fill: currentColor; flex: none; }
+.map-stage { height: 420vh; position: relative; background: #0d0f0b; }
+.map-sticky {
+  position: sticky; top: 0; height: 100vh; height: 100dvh; min-height: 520px; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 50%, #1b2a22 0%, #0d0f0b 72%);
+}
+#mapCanvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-caption { position: absolute; left: 9%; top: 17%; z-index: 3; pointer-events: none; max-width: 440px; }
+.map-caption .section-kicker { margin-bottom: 14px; }
+.map-caption h2 {
+  font-family: Georgia, "Times New Roman", serif; font-weight: 400;
+  font-size: clamp(32px, 5vw, 62px); line-height: 1.06;
+}
+.pin-card {
+  position: absolute; z-index: 5; transform: translate(-50%, -100%); margin-top: -34px;
+  width: min(300px, 78vw); padding: 18px 20px; background: #151611ee;
+  border: 1px solid var(--gold); opacity: 0; pointer-events: none; transition: opacity .35s;
+}
+.pin-card.show { opacity: 1; pointer-events: auto; }
+.pin-card::after {
+  content: ""; position: absolute; left: 50%; bottom: -8px; width: 14px; height: 14px;
+  background: #151611; border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+  transform: translateX(-50%) rotate(45deg);
+}
+.pin-card strong { display: block; font-family: Georgia, serif; font-weight: 400; font-size: 26px; color: var(--gold); }
+.pin-addr { display: block; font-size: 12px; color: #d4cfbf; margin: 6px 0 14px; line-height: 1.5; }
+.pin-card a {
+  display: flex; align-items: center; justify-content: center; gap: 8px; background: #25d366; color: #07240f;
+  padding: 11px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold;
+}
+.pin-card a .wa-ico { font-size: 18px; }
+.wa-badge {
+  position: relative; width: 76px; height: 76px; border-radius: 50%; background: #25d366; color: #fff;
+  display: grid; place-items: center; font-size: 42px; margin-bottom: 26px;
+}
+.wa-badge::before, .wa-badge::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366;
+  animation: waPulse 2.4s infinite;
+}
+.wa-badge::after { animation-delay: 1.2s; }
+@keyframes waPulse { from { transform: scale(1); opacity: .7; } to { transform: scale(1.9); opacity: 0; } }
+.send-button { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #07240f; }
+.send-button:hover { background: #3be27c; }
+.send-button .wa-ico { font-size: 20px; }
+.wa-fab {
+  position: fixed; right: 22px; bottom: 22px; width: 56px; height: 56px; border-radius: 50%;
+  background: #25d366; color: #fff; display: grid; place-items: center; font-size: 30px; z-index: 30;
+  box-shadow: 0 8px 24px #0007; opacity: 0; transform: scale(.6); pointer-events: none; transition: .3s;
+}
+.wa-fab.show { opacity: 1; transform: none; pointer-events: auto; }
+
+.elem-copy { position: absolute; left: 10%; bottom: 15%; max-width: 760px; z-index: 2; pointer-events: none; opacity: 0; }
+.elem-copy.show { animation: elemIn .8s ease forwards; }
+@keyframes elemIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 750px) {
+  nav { height: 66px; padding: 0 5%; }
+  .brand { font-size: 11px; letter-spacing: 2px; }
+  .nav-right { gap: 12px; }
+  .nav-right a { display: none; }
+  .progress { right: 12px; top: 30%; gap: 16px; }
+  .progress-item { font-size: 8px; gap: 6px; }
+  .progress-dot { width: 6px; height: 6px; }
+  .hero-copy { left: 7%; right: 13%; bottom: 16%; }
+  h1 { letter-spacing: -1px; }
+  .hero-subtitle { font-size: 12px; }
+  .section { padding: 90px 7%; }
+  .elements { grid-template-columns: repeat(2, 1fr); }
+  .element { border-bottom: 1px solid #ffffff18; }
+  .element:last-child { border-right: 1px solid #ffffff18; }
+  .product-grid { grid-template-columns: 1fr; }
+  .product-card { min-height: 220px; }
+  .order-layout { grid-template-columns: 1fr; gap: 35px; }
+  .order-form { padding: 20px; }
+  .contact-section { padding: 70px 7%; }
+  .video-counter { right: 7%; bottom: 22px; }
+  .map-caption { left: 7%; top: 13%; max-width: 80%; }
+  .wa-fab { right: 14px; bottom: 14px; }
+  .elem-copy { left: 7%; right: 13%; bottom: 16%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol></svg>
+<nav>
+  <a class="brand" href="#top" aria-label="MGR Bricks home">
+    <span class="brick-logo"></span>
+    <span>MGR BRICKS</span>
+  </a>
+  <div class="nav-right">
+    <a href="#products" data-en="Products" data-ta="தயாரிப்புகள்">Products</a>
+    <a href="#order" data-en="Place an order" data-ta="ஆர்டர் செய்ய">Place an order</a>
+    <button class="lang-button" id="languageButton" type="button">தமிழ்</button>
+  </div>
+</nav>
+
+<aside class="progress" aria-label="Five elements progress">
+  <div class="progress-item active" data-stage="earth"><span>EARTH</span><i class="progress-dot"></i></div>
+  <div class="progress-item" data-stage="water"><span>WATER</span><i class="progress-dot"></i></div>
+  <div class="progress-item" data-stage="fire"><span>ETHER</span><i class="progress-dot"></i></div>
+  <div class="progress-item" data-stage="air"><span>AIR</span><i class="progress-dot"></i></div>
+  <div class="progress-item" data-stage="ether"><span>FIRE</span><i class="progress-dot"></i></div>
+</aside>
+
+<main id="top">
+  <section class="scroll-stage" id="story">
+    <div class="sticky-hero">
+      <!-- IMPORTANT: use the re-encoded (all-keyframe) file here -->
+      <video id="storyVideo"
+        muted
+        playsinline
+        preload="auto"
+        disablepictureinpicture>
+      </video>
+      <div class="video-shade"></div>
+
+      <div class="hero-copy">
+        <div class="eyebrow" data-en="Rooted in earth · Built for generations"
+             data-ta="மண்ணில் தொடங்கி · தலைமுறைகளுக்காக">Rooted in earth · Built for generations</div>
+        <h1 data-en-html="Small Bricks,<br><span>Big Dreams.</span>"
+            data-ta-html="சிறிய செங்கல்,<br><span>பெரிய கனவுகள்.</span>">
+          Small Bricks,<br><span>Big Dreams.</span>
+        </h1>
+        <p class="hero-subtitle"
+           data-en="From the richness of the earth to the foundations of your dreams. Every brick begins a story."
+           data-ta="மண்ணின் வளத்திலிருந்து உங்கள் கனவுகளின் அடித்தளம் வரை. ஒவ்வொரு செங்கலும் ஒரு கதையைத் தொடங்குகிறது.">
+          From the richness of the earth to the foundations of your dreams.
+          Every brick begins a story.
+        </p>
+        <div class="scroll-hint">
+          <span class="scroll-line"></span>
+          <span data-en="Scroll to experience" data-ta="அனுபவிக்க கீழே செல்லவும்">Scroll to experience</span>
+        </div>
+      </div>
+      <div class="elem-copy" id="elemCopy">
+        <div class="eyebrow" id="elemNum">01 / 05</div>
+        <h1 id="elemTitle">Earth</h1>
+        <p class="hero-subtitle" id="elemText"></p>
+      </div>
+      <div class="video-counter" id="videoCounter">STORY · 00:00 / 00:33</div>
+    </div>
+  </section>
+
+  <section class="map-stage" id="mapStage">
+    <div class="map-sticky">
+      <canvas id="mapCanvas"></canvas>
+      <div class="map-caption">
+        <div class="section-kicker" id="capKicker">Planet Earth</div>
+        <h2 id="capTitle">Every journey starts on soil.</h2>
+      </div>
+      <div class="pin-card" id="pinCard">
+        <strong>MGR Bricks</strong>
+        <span class="pin-addr" data-en="7th Street, Siruvathur, Panruti" data-ta="7வது தெரு, சிறுவத்தூர், பண்ருட்டி">7th Street, Siruvathur, Panruti</span>
+        <a href="https://wa.me/918667465378" target="_blank" rel="noopener noreferrer">
+          <svg class="wa-ico"><use href="#wa"/></svg><span data-en="Chat on WhatsApp" data-ta="WhatsApp-ல் பேசுங்கள்">Chat on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section story-intro">
+    <div class="section-kicker" data-en="The five elements" data-ta="ஐந்து இயற்கைத் தத்துவங்கள்">The five elements</div>
+    <h2 data-en-html="Nature gives us the elements.<br><em>We build the future.</em>"
+        data-ta-html="இயற்கை தரும் தத்துவங்கள்.<br><em>எதிர்காலத்தை உருவாக்குவோம்.</em>">
+      Nature gives us the elements.<br><em>We build the future.</em>
+    </h2>
+    <p data-en="From raw soil and water to air-dried clay and the fire of the kiln, every stage plays its part in creating a brick."
+       data-ta="மண் மற்றும் நீரிலிருந்து, காற்றில் உலர்ந்து, சூளையின் நெருப்பில் வலிமை பெறும் வரை ஒவ்வொரு கட்டமும் முக்கியம்.">
+      From raw soil and water to air-dried clay and the fire of the kiln, every stage plays its part in creating a brick.
+    </p>
+    <div class="elements">
+      <article class="element"><span class="element-number">01</span><h3>Earth</h3><p>Where every brick begins.</p></article>
+      <article class="element"><span class="element-number">02</span><h3>Water</h3><p>Soil shaped into purpose.</p></article>
+      <article class="element"><span class="element-number">03</span><h3>Fire</h3><p>Strength born from heat.</p></article>
+      <article class="element"><span class="element-number">04</span><h3>Air</h3><p>Time, sunlight and patience.</p></article>
+      <article class="element"><span class="element-number">05</span><h3>Ether</h3><p>A world of possibilities.</p></article>
+    </div>
+  </section>
+
+  <section class="section products" id="products">
+    <div class="section-kicker" data-en="Made for your next chapter" data-ta="உங்கள் அடுத்த கட்டுமானத்திற்காக">Made for your next chapter</div>
+    <h2 data-en-html="The right foundation<br>for <em>every dream.</em>"
+        data-ta-html="ஒவ்வொரு கனவுக்கும்<br><em>சரியான அடித்தளம்.</em>">
+      The right foundation<br>for <em>every dream.</em>
+    </h2>
+    <p data-en="Choose what your project needs. Select a product to add it directly to your order."
+       data-ta="உங்கள் கட்டுமானத்திற்குத் தேவையான பொருளைத் தேர்ந்தெடுக்கவும். தேர்வு செய்ததும் ஆர்டர் படிவத்தில் சேர்க்கப்படும்.">
+      Choose what your project needs. Select a product to add it directly to your order.
+    </p>
+
+    <div class="product-grid">
+      <article class="product-card">
+        <div class="product-art brick-art"></div>
+        <h3 data-en="Clay Bricks" data-ta="சுடுமண் செங்கற்கள்">Clay Bricks</h3>
+        <button type="button" data-product="Clay Bricks" data-ta-product="சுடுமண் செங்கற்கள்">Select product ↗</button>
+      </article>
+      <article class="product-card">
+        <div class="product-art">▤</div>
+        <h3 data-en="Cement Bags" data-ta="சிமெண்ட் மூட்டைகள்">Cement Bags</h3>
+        <button type="button" data-product="Cement Bags" data-ta-product="சிமெண்ட் மூட்டைகள்">Select product ↗</button>
+      </article>
+      <article class="product-card">
+        <div class="product-art brick-art"></div>
+        <h3 data-en="Construction Bricks" data-ta="கட்டுமானச் செங்கற்கள்">Construction Bricks</h3>
+        <button type="button" data-product="Construction Bricks" data-ta-product="கட்டுமானச் செங்கற்கள்">Select product ↗</button>
+      </article>
+      <article class="product-card">
+        <div class="product-art">▥</div>
+        <h3 data-en="Machine-made Bricks" data-ta="இயந்திரச் செங்கற்கள்">Machine-made Bricks</h3>
+        <button type="button" data-product="Machine-made Bricks" data-ta-product="இயந்திரச் செங்கற்கள்">Select product ↗</button>
+      </article>
+      <article class="product-card">
+        <div class="product-art">⌂</div>
+        <h3 data-en="Site Requirements" data-ta="கட்டுமானத் தளத் தேவைகள்">Site Requirements</h3>
+        <button type="button" data-product="Site Requirements" data-ta-product="கட்டுமானத் தளத் தேவைகள்">Select product ↗</button>
+      </article>
+    </div>
+  </section>
+
+
+  <section class="section order-section" id="order">
+    <div class="section-kicker" data-en="Let's build something lasting" data-ta="நீடித்த ஒன்றை உருவாக்குவோம்">Let's build something lasting</div>
+    <h2 data-en-html="Your project starts<br>with <em>a conversation.</em>"
+        data-ta-html="உங்கள் கட்டுமானம்<br><em>ஒரு உரையாடலில் தொடங்குகிறது.</em>">
+      Your project starts<br>with <em>a conversation.</em>
+    </h2>
+
+    <div class="order-layout">
+      <div class="order-note">
+        <div class="wa-badge"><svg class="wa-ico"><use href="#wa"/></svg></div>
+        <strong data-en="Tell us what you need." data-ta="உங்களுக்கு என்ன தேவை என்று சொல்லுங்கள்.">Tell us what you need.</strong>
+        <p data-en="Choose your product, enter your requirements, and continue through WhatsApp to discuss your order with MGR Bricks."
+           data-ta="பொருளைத் தேர்ந்தெடுத்து உங்கள் தேவைகளைப் பதிவு செய்யுங்கள். WhatsApp மூலம் MGR Bricks-ஐ தொடர்புகொள்ளலாம்.">
+          Choose your product, enter your requirements, and continue through WhatsApp to discuss your order with MGR Bricks.
+        </p>
+        <p style="margin-top:25px;font-size:12px">
+          WhatsApp: 8667465378<br>
+          Email: gnitheesh2315@gmail.com
+        </p>
+      </div>
+
+      <form class="order-form" id="orderForm">
+        <div class="field">
+          <label for="customerName" data-en="Your name" data-ta="உங்கள் பெயர்">Your name</label>
+          <input id="customerName" name="name" autocomplete="name" required placeholder="Enter your name">
+        </div>
+        <div class="field">
+          <label for="customerPhone" data-en="Phone number" data-ta="தொலைபேசி எண்">Phone number</label>
+          <input id="customerPhone" name="phone" type="tel" autocomplete="tel" required
+                 pattern="[0-9+\-\s]{8,16}" placeholder="Your contact number">
+        </div>
+        <div class="field">
+          <label for="product" data-en="Choose a product" data-ta="பொருளைத் தேர்ந்தெடுக்கவும்">Choose a product</label>
+          <select id="product" name="product" required>
+            <option value="">Select a product</option>
+            <option value="Clay Bricks">Clay Bricks</option>
+            <option value="Cement Bags">Cement Bags</option>
+            <option value="Construction Bricks">Construction Bricks</option>
+            <option value="Machine-made Bricks">Machine-made Bricks</option>
+            <option value="Site Requirements">Site Requirements</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="quantity" data-en="Quantity / requirements" data-ta="அளவு / தேவைகள்">Quantity / requirements</label>
+          <input id="quantity" name="quantity" required placeholder="e.g. 2,000 bricks">
+        </div>
+        <div class="field">
+          <label for="message" data-en="Additional message (optional)" data-ta="கூடுதல் தகவல் (விருப்பம்)">Additional message (optional)</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project"></textarea>
+        </div>
+        <button class="send-button" type="submit"><svg class="wa-ico"><use href="#wa"/></svg><span data-en="Continue on WhatsApp ↗" data-ta="WhatsApp-ல் தொடரவும் ↗">Continue on WhatsApp ↗</span></button>
+      </form>
+    </div>
+  </section>
+
+  <section class="contact-section" id="location">
+    <div>
+      <div class="section-kicker" data-en="Find us" data-ta="எங்களைக் கண்டறியுங்கள்">Find us</div>
+      <h2>MGR Sengal Soolai</h2>
+      <p>7th Street, Siruvathur, Panruti, Tamil Nadu, India</p>
+    </div>
+    <a class="map-button"
+       href="https://www.google.com/maps/dir/?api=1&destination=MGR+Sengal+Soolai%2C+7th+Street%2C+Siruvathur%2C+Panruti%2C+Tamil+Nadu"
+       target="_blank" rel="noopener noreferrer"
+       data-en="Get directions ↗" data-ta="வழியைப் பெறுங்கள் ↗">Get directions ↗</a>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> MGR BRICKS</span>
+  <span data-en="Building Dreams, One Brick at a Time." data-ta="ஒவ்வொரு செங்கல்லிலும் கனவுகளை உருவாக்குகிறோம்.">Building Dreams, One Brick at a Time.</span>
+</footer>
+<a class="wa-fab" id="waFab" href="https://wa.me/918667465378" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><svg class="wa-ico"><use href="#wa"/></svg></a>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const video = document.getElementById("storyVideo");
+const story = document.getElementById("story");
+const counter = document.getElementById("videoCounter");
+const toast = document.getElementById("toast");
+const heroCopy = document.querySelector(".hero-copy");
+const progressItems = document.querySelectorAll(".progress-item");
+let language = "en";
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function formatTime(seconds) {
+  const s = Math.floor(seconds || 0);
+  return String(Math.floor(s / 60)).padStart(2, "0") + ":" +
+         String(s % 60).padStart(2, "0");
+}
+
+/* ---------- Smooth scroll-scrubbed video ---------- */
+let targetProgress = 0;   // where the scroll position says we should be
+let currentProgress = 0;  // eased value the video actually follows
+let lastActiveIndex = -1;
+
+// Download the whole video into memory first, so scrubbing never waits on the network (fixes phone stutter)
+// Phones get the light file; if it is missing they fall back to the main file
+const isMobile = window.matchMedia("(max-width: 750px), (pointer: coarse)").matches;
+const VIDEO_URLS = isMobile
+  ? ["mgr-bricks-story-mobile.mp4", "mgr-bricks-story-scrub.mp4"]
+  : ["mgr-bricks-story-scrub.mp4"];
+counter.textContent = "LOADING STORY…";
+function loadVideo(i) {
+  fetch(VIDEO_URLS[i])
+    .then(r => { if (!r.ok) throw new Error("load failed"); return r.blob(); })
+    .then(b => { video.src = URL.createObjectURL(b); video.load(); })
+    .catch(() => {
+      if (i + 1 < VIDEO_URLS.length) loadVideo(i + 1);
+      else video.src = VIDEO_URLS[0];
+    });
+}
+loadVideo(0);
+
+// Where in the video (0 = start, 1 = end) each heading appears: Earth, Water, Fire, Air, Ether
+// Works for any video length. For a 33s video these are about 2s, 7s, 12s, 17s, 22s.
+const STAGE_STARTS = [0.06, 0.21, 0.36, 0.52, 0.67];
+const ELEMENTS = [
+  { en: "Earth", ta: "மண்", enText: "Where every brick begins.", taText: "ஒவ்வொரு செங்கலும் தொடங்கும் இடம்." },
+  { en: "Water", ta: "நீர்", enText: "Soil shaped into purpose.", taText: "மண் ஒரு வடிவம் பெறுகிறது." },
+  { en: "Fire", ta: "நெருப்பு", enText: "Strength born from heat.", taText: "வெப்பத்தில் பிறக்கும் வலிமை." },
+  { en: "Air", ta: "காற்று", enText: "Time, sunlight and patience.", taText: "காலம், வெயில், பொறுமை." },
+  { en: "Ether", ta: "ஆகாயம்", enText: "A world of possibilities.", taText: "எல்லையற்ற சாத்தியங்கள்." }
+];
+const elemCopy = document.getElementById("elemCopy");
+const elemNum = document.getElementById("elemNum");
+const elemTitle = document.getElementById("elemTitle");
+const elemText = document.getElementById("elemText");
+let lastStage = -2;
+
+function showStage(i) {
+  lastStage = i;
+  elemCopy.classList.remove("show");
+  if (i < 0) return;
+  const d = ELEMENTS[i];
+  elemNum.textContent = "0" + (i + 1) + " / 05";
+  elemTitle.textContent = language === "ta" ? d.ta : d.en;
+  elemText.textContent = language === "ta" ? d.taText : d.enText;
+  void elemCopy.offsetWidth; // restart the fade-in animation
+  elemCopy.classList.add("show");
+}
+
+function readScroll() {
+  const rect = story.getBoundingClientRect();
+  const totalScrollable = story.offsetHeight - window.innerHeight;
+  const travelled = clamp(-rect.top, 0, totalScrollable);
+  targetProgress = totalScrollable > 0 ? travelled / totalScrollable : 0;
+}
+
+function tick() {
+  // Ease toward the target (0.08 = smoother, 0.2 = snappier)
+  currentProgress += (targetProgress - currentProgress) * 0.12;
+  if (Math.abs(targetProgress - currentProgress) < 0.0005) {
+    currentProgress = targetProgress;
+  }
+
+  if (Number.isFinite(video.duration) && video.duration > 0) {
+    const t = currentProgress * video.duration;
+
+    // Seek only when the previous seek has finished
+    const inStory = story.getBoundingClientRect().bottom > 0;
+    if (inStory && !video.seeking && Math.abs(t - video.currentTime) > 0.03) {
+      if (video.fastSeek) video.fastSeek(t); else video.currentTime = t;
+    }
+
+    counter.textContent =
+      "STORY · " + formatTime(t) + " / " + formatTime(video.duration);
+  }
+
+  // Fade out hero text as soon as scrolling starts
+  const fade = clamp(1 - currentProgress / 0.05, 0, 1);
+  heroCopy.style.opacity = fade;
+  heroCopy.style.transform = "translateY(" + (-(1 - fade) * 40) + "px)";
+  counter.style.opacity = fade;
+
+  let stage = -1;
+  STAGE_STARTS.forEach((st, i) => { if (currentProgress >= st) stage = i; });
+  if (stage !== lastStage) showStage(stage);
+
+  const activeIndex = Math.max(stage, 0);
+  if (activeIndex !== lastActiveIndex) {
+    lastActiveIndex = activeIndex;
+    progressItems.forEach((item, index) => {
+      item.classList.toggle("active", index === activeIndex);
+    });
+  }
+
+  requestAnimationFrame(tick);
+}
+
+window.addEventListener("scroll", readScroll, { passive: true });
+window.addEventListener("resize", readScroll);
+video.addEventListener("loadedmetadata", readScroll);
+// iPhone Safari: unlock the video on the first touch so scrubbing works
+document.addEventListener("touchstart", () => {
+  video.play().then(() => video.pause()).catch(() => {});
+}, { once: true });
+readScroll();
+requestAnimationFrame(tick);
+
+/* ---------- Globe -> Tamil Nadu -> MGR Bricks ---------- */
+const mapStage = document.getElementById("mapStage");
+const cvs = document.getElementById("mapCanvas");
+const ctx = cvs.getContext("2d");
+const pinCard = document.getElementById("pinCard");
+const capKicker = document.getElementById("capKicker");
+const capTitle = document.getElementById("capTitle");
+const waFab = document.getElementById("waFab");
+const RAD = Math.PI / 180;
+// Coarse, stylised outlines as [lon, lat]
+const LAND = [
+  [[-17,21],[-10,35],[10,37],[32,31],[43,12],[51,11],[40,-3],[40,-15],[33,-26],[20,-35],[12,-17],[9,4],[-8,4],[-17,14]],
+  [[-10,36],[-9,43],[0,50],[8,54],[20,55],[30,60],[28,70],[60,70],[100,77],[140,72],[170,66],[160,55],[142,46],[130,35],[122,30],[122,22],[108,18],[105,9],[100,13],[98,8],[103,1],[98,16],[92,22],[88,22],[80,15],[77,8],[73,17],[70,22],[58,24],[56,26],[50,30],[48,29],[56,18],[44,13],[35,28],[34,31],[27,37],[36,36],[26,40],[24,38],[20,40],[12,44],[16,38],[8,44],[3,43],[-5,36]],
+  [[-168,66],[-140,70],[-95,72],[-80,63],[-60,55],[-55,48],[-70,43],[-76,35],[-81,25],[-97,26],[-105,20],[-95,16],[-83,9],[-78,8],[-90,15],[-105,22],[-117,32],[-124,40],[-125,50],[-140,60],[-165,60]],
+  [[-78,8],[-60,10],[-50,0],[-35,-6],[-40,-22],[-58,-38],[-68,-54],[-75,-48],[-72,-30],[-81,-5]],
+  [[114,-22],[130,-12],[142,-11],[153,-27],[146,-39],[135,-35],[115,-34]]
+];
+const TN = [[77.55,8.08],[78.1,8.9],[79.0,9.3],[79.3,10.3],[79.85,10.3],[79.85,11.0],[79.8,11.9],[80.3,13.1],[80.3,13.6],[79.9,13.4],[79.3,13.3],[78.8,13.2],[78.0,12.9],[77.8,12.7],[77.5,12.2],[77.7,11.8],[77.2,11.6],[77.0,11.1],[76.7,11.4],[76.5,11.1],[76.9,10.5],[77.2,10.2],[77.3,9.5],[77.3,8.9],[77.5,8.4]];
+const CITIES = [["Chennai",80.27,13.08],["Coimbatore",76.96,11.0],["Madurai",78.12,9.92],["Trichy",78.7,10.8],["Salem",78.16,11.66],["Tirunelveli",77.7,8.73]];
+const PANRUTI = [79.55, 11.77];
+const CAPTIONS = {
+  en: [["Planet Earth","Every journey starts on soil."],["Asia · India","Turning toward the south."],["Tamil Nadu","Zooming into the land of bricks."],["Siruvathur, Panruti","MGR Bricks is right here."]],
+  ta: [["பூமி","ஒவ்வொரு பயணமும் மண்ணில் தொடங்குகிறது."],["ஆசியா · இந்தியா","தெற்கு நோக்கித் திரும்புகிறோம்."],["தமிழ்நாடு","செங்கல் மண்ணை நோக்கி நெருங்குகிறோம்."],["சிறுவத்தூர், பண்ருட்டி","MGR Bricks இங்கேதான் இருக்கிறது."]]
+};
+const STARS = Array.from({ length: 70 }, (_, i) => [Math.sin(i * 91.7) * .5 + .5, Math.sin(i * 47.3 + 2) * .5 + .5, .4 + (i % 3) * .3]);
+let mw = 0, mh = 0, mTarget = 0, mCur = 0, lastCap = -1;
+const ease = t => t * t * (3 - 2 * t);
+const lerp = (a, b, t) => a + (b - a) * t;
+
+function sizeMap() {
+  const d = Math.min(window.devicePixelRatio || 1, 2);
+  mw = cvs.clientWidth; mh = cvs.clientHeight;
+  cvs.width = mw * d; cvs.height = mh * d;
+  ctx.setTransform(d, 0, 0, d, 0, 0);
+}
+function readMap() {
+  const r = mapStage.getBoundingClientRect();
+  const total = mapStage.offsetHeight - window.innerHeight;
+  mTarget = total > 0 ? clamp(-r.top / total, 0, 1) : 0;
+  waFab.classList.toggle("show", window.scrollY > window.innerHeight * 0.9);
+}
+// Orthographic projection: returns [x, y, depth]
+function proj(lo, la, s) {
+  const l = (lo - s.lo) * RAD, f = la * RAD, f0 = s.la * RAD, cf = Math.cos(f);
+  return [
+    s.cx + s.R * cf * Math.sin(l),
+    s.cy - s.R * (Math.cos(f0) * Math.sin(f) - Math.sin(f0) * cf * Math.cos(l)),
+    Math.sin(f0) * Math.sin(f) + Math.cos(f0) * cf * Math.cos(l)
+  ];
+}
+function path(pts, s) {
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    let [x, y, z] = proj(p[0], p[1], s);
+    if (z < 0) { const dx = x - s.cx, dy = y - s.cy, m = Math.hypot(dx, dy) || 1; x = s.cx + dx / m * s.R; y = s.cy + dy / m * s.R; }
+    i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  });
+  ctx.closePath();
+}
+function graticule(s) {
+  ctx.strokeStyle = "rgba(216,174,106,.14)"; ctx.lineWidth = 1;
+  const line = pts => {
+    ctx.beginPath(); let on = false;
+    pts.forEach(p => { const [x, y, z] = proj(p[0], p[1], s); if (z > 0) { on ? ctx.lineTo(x, y) : ctx.moveTo(x, y); on = true; } else on = false; });
+    ctx.stroke();
+  };
+  for (let lo = -180; lo < 180; lo += 20) { const a = []; for (let la = -90; la <= 90; la += 6) a.push([lo, la]); line(a); }
+  for (let la = -80; la <= 80; la += 20) { const a = []; for (let lo = -180; lo <= 180; lo += 6) a.push([lo, la]); line(a); }
+}
+function setCaption(i) {
+  lastCap = i;
+  capKicker.textContent = CAPTIONS[language][i][0];
+  capTitle.textContent = CAPTIONS[language][i][1];
+}
+function drawMap(p, now) {
+  ctx.clearRect(0, 0, mw, mh);
+  const rot = ease(clamp(p / .45, 0, 1)), zm = ease(clamp((p - .45) / .35, 0, 1));
+  const base = Math.min(mw, mh) * .36;
+  const s = {
+    lo: lerp(-110, 78.6, rot), la: lerp(20, 11, zm),
+    R: base * Math.pow(mh * 6.4 / base, zm),
+    cx: lerp(mw / 2, mw < 750 ? mw / 2 : mw * .58, zm), cy: lerp(mh / 2, mh * .56, zm)
+  };
+  const worldA = 1 - ease(clamp((p - .6) / .2, 0, 1));
+  const tnA = ease(clamp((p - .55) / .22, 0, 1));
+
+  ctx.fillStyle = "#f5f1e8";
+  STARS.forEach(t => { ctx.globalAlpha = worldA * t[2] * .6; ctx.fillRect(t[0] * mw, t[1] * mh, 1.4, 1.4); });
+
+  if (worldA > 0.01) {
+    ctx.globalAlpha = worldA;
+    const g = ctx.createRadialGradient(s.cx - s.R * .3, s.cy - s.R * .3, s.R * .1, s.cx, s.cy, s.R);
+    g.addColorStop(0, "#2a5560"); g.addColorStop(1, "#0e1c20");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(s.cx, s.cy, s.R, 0, 7); ctx.fill();
+    graticule(s);
+    ctx.fillStyle = "#4d6e4a"; ctx.strokeStyle = "rgba(155,181,143,.35)"; ctx.lineWidth = 1;
+    LAND.forEach(pl => { path(pl, s); ctx.fill(); ctx.stroke(); });
+    ctx.strokeStyle = "rgba(216,174,106,.4)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(s.cx, s.cy, s.R, 0, 7); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // Tamil Nadu: a small gold patch on the globe, becomes the full map when zoomed
+  if (proj(78.5, 10.8, s)[2] > 0.05) {
+    path(TN, s);
+    ctx.fillStyle = "rgba(216,174,106," + (.75 - .55 * tnA) + ")"; ctx.fill();
+    ctx.strokeStyle = "#d8ae6a"; ctx.lineWidth = 1 + tnA * 1.5; ctx.stroke();
+    if (tnA > .02) {
+      ctx.globalAlpha = tnA; ctx.fillStyle = "#f5f1e8"; ctx.font = "11px Arial"; ctx.textAlign = "left";
+      CITIES.forEach(c => { const [x, y] = proj(c[1], c[2], s); ctx.beginPath(); ctx.arc(x, y, 2.5, 0, 7); ctx.fill(); ctx.fillText(c[0], x + 8, y + 4); });
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // MGR Bricks pin
+  const pt = clamp((p - .8) / .12, 0, 1);
+  if (pt > 0) {
+    const [px, py] = proj(PANRUTI[0], PANRUTI[1], s);
+    const drop = (1 - ease(pt)) * 70, t = ((now / 1000) % 1.6) / 1.6, hy = py - 26 - drop;
+    ctx.strokeStyle = "#d8ae6a"; ctx.lineWidth = 2;
+    ctx.globalAlpha = (1 - t) * pt; ctx.beginPath(); ctx.arc(px, py, 6 + t * 44, 0, 7); ctx.stroke();
+    ctx.globalAlpha = pt; ctx.fillStyle = "#d8ae6a";
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(px, hy, 11, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(px - 9, hy + 5); ctx.lineTo(px + 9, hy + 5); ctx.lineTo(px, py - drop); ctx.fill();
+    ctx.fillStyle = "#151611"; ctx.beginPath(); ctx.arc(px, hy, 4, 0, 7); ctx.fill();
+    ctx.globalAlpha = 1;
+    pinCard.style.left = px + "px"; pinCard.style.top = (py - 24) + "px";
+  }
+  pinCard.classList.toggle("show", pt > .6);
+
+  const idx = p < .28 ? 0 : p < .52 ? 1 : p < .8 ? 2 : 3;
+  if (idx !== lastCap) setCaption(idx);
+}
+function mapTick(now) {
+  mCur += (mTarget - mCur) * .1;
+  if (Math.abs(mTarget - mCur) < .0003) mCur = mTarget;
+  const r = mapStage.getBoundingClientRect();
+  if (r.bottom > 0 && r.top < window.innerHeight) drawMap(mCur, now);
+  requestAnimationFrame(mapTick);
+}
+window.addEventListener("scroll", readMap, { passive: true });
+window.addEventListener("resize", () => { sizeMap(); readMap(); });
+sizeMap(); readMap(); requestAnimationFrame(mapTick);
+
+/* ---------- Language switch ---------- */
+document.getElementById("languageButton").addEventListener("click", () => {
+  language = language === "en" ? "ta" : "en";
+  document.documentElement.lang = language;
+  lastCap = -1;
+  lastStage = -2;
+
+  document.querySelectorAll("[data-en]").forEach(el => {
+    const value = el.getAttribute("data-" + language);
+    if (value !== null) el.textContent = value;
+  });
+
+  document.querySelectorAll("[data-en-html]").forEach(el => {
+    const value = el.getAttribute("data-" + language + "-html");
+    if (value !== null) el.innerHTML = value;
+  });
+
+  document.querySelectorAll("[data-product]").forEach(button => {
+    button.textContent =
+      (language === "ta" ? "தேர்வு செய்யவும் ↗" : "Select product ↗");
+  });
+
+  document.getElementById("languageButton").textContent =
+    language === "en" ? "தமிழ்" : "English";
+});
+
+/* ---------- Selecting a product fills the order form ---------- */
+document.querySelectorAll("[data-product]").forEach(button => {
+  button.addEventListener("click", () => {
+    const select = document.getElementById("product");
+    const product = button.getAttribute("data-product");
+    select.value = product;
+    document.getElementById("order").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("customerName").focus({ preventScroll: true });
+    showToast(language === "ta"
+      ? "பொருள் தேர்ந்தெடுக்கப்பட்டது. ஆர்டர் விவரங்களை நிரப்பவும்."
+      : product + " selected. Complete your order details.");
+  });
+});
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 3200);
+}
+
+/* ---------- WhatsApp handoff ---------- */
+document.getElementById("orderForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const product = document.getElementById("product").value;
+  const quantity = document.getElementById("quantity").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  const text =
+    "Hello MGR Bricks! I would like to enquire about an order.\n\n" +
+    "Name: " + name + "\n" +
+    "Phone: " + phone + "\n" +
+    "Product: " + product + "\n" +
+    "Quantity / requirements: " + quantity +
+    (message ? "\nAdditional message: " + message : "");
+
+  const whatsappURL =
+    "https://wa.me/918667465378?text=" + encodeURIComponent(text);
+
+  window.open(whatsappURL, "_blank", "noopener,noreferrer");
+});
+</script>
+</body>
+</html>
